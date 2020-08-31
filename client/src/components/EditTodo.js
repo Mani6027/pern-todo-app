@@ -8,7 +8,8 @@ const EditTodo = ({ todo }) => {
         // e.preventDefault();
         try {
             const body = { description };
-            const response = await fetch(`http://127.0.0.1:5000/todos/${todo.todo_id}`, {
+            //proxy
+            await fetch(`/todos/${todo.todo_id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)

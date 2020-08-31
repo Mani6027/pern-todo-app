@@ -6,7 +6,7 @@ const ListTodo = () => {
 
     const getTodos = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/todos');
+            const response = await fetch('/todos');
             const data = await response.json();
 
             setTodo(data.rows);
@@ -21,7 +21,7 @@ const ListTodo = () => {
 
     const deleteTodo = async id => {
         try {
-            await fetch(`http://127.0.0.1:5000/todos/${id}`, {
+            await fetch(`/todos/${id}`, {
                 method: 'DELETE',
             });
 

@@ -3,14 +3,27 @@
 const express  = require('express');
 const app = express();
 const cors  = require('cors');
-const pool = require('./db')
+const pool = require('./db');
+const path = require('path');
+//process.env.PORT
+const PORT = process.env.PORT || 5000;
 
 //middleware
 app.use(cors());
 app.use(express.json());
 
-//ROUTUES
+// This is not the only way to do it, ther is lot of another ways to do this.
+// 1.app.use(express.static(path.join(__dirname, "client/build")));
+// app.use(express.static("client/build"))
 
+
+if (process.env.NODE_ENV === "production"){
+    //server static
+    //npm run build
+    app.use(express.static(path.join(__dirname, "client/build")));
+}
+
+//ROUTUES
 //create a todo
 app.post('/todos', async(req, res) => {
     try{
@@ -84,6 +97,11 @@ app.delete('/todos/:id', async(req, res) => {
 });
 
 
-app.listen(5000, () => {
-    console.log('Server started at port 5000!!')
+// To redirect anything other than perceived routes.
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/index.html"));
+})
+
+app.listen(PORT, () => {
+    console.log(`Server started at port ${PORT}!!`)
 });
